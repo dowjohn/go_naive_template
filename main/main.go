@@ -1,23 +1,22 @@
 package main
 
 import (
+	"fmt"
+	"github.com/gorilla/mux"
 	"log"
-	"template/types"
+	"net/http"
 )
 
 func main() {
-	example := types.Example{
-		FirstName: "joseph",
-		LastName:  "stinkleton",
-	}
-	closeIt := closure(&example)
-	closeIt()
-	log.Print(example.LastName)
-}
+	r := mux.NewRouter()
+	r.HandleFunc("/example/{name}", func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		name := vars["name"]
 
-func closure(example *types.Example) func() {
-	positiveName := "smellsgoodelton"
-	return func() {
-		example.LastName = positiveName
-	}
+		_, err := fmt.Fprintf(w, "You've requested the name %s", name)
+		log.Print(err)
+	})
+
+	err := http.ListenAndServe(":80", r)
+	log.Print(err)
 }
