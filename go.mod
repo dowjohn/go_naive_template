@@ -1,3 +1,3 @@
-module gobbo
+module template
 
 go 1.12

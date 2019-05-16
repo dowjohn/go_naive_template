@@ -2,23 +2,22 @@ package main
 
 import (
 	"log"
-	"strconv"
+	"template/types"
 )
 
 func main() {
-	closer := closeIt("1" +
-		"")
-	yoland := closer()
-	log.Print(yoland)
+	example := types.Example{
+		FirstName: "joseph",
+		LastName:  "stinkleton",
+	}
+	refFunc := ref(&example)
+	refFunc()
+	log.Print(example.LastName)
 }
 
-func closeIt(lmao string) func() int {
-	x := lmao
-	return func() int {
-		num, err := strconv.Atoi(x)
-		if err != nil {
-			log.Fatal("That's not an int!")
-		}
-		return num
+func ref(example *types.Example) func() {
+	positiveName := "smellsgoodelton"
+	return func() {
+		example.LastName = positiveName
 	}
 }
