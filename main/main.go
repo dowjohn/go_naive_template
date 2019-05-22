@@ -27,7 +27,7 @@ func proceduralFactorial(input int) int {
 		if i == 0 {
 			continue
 		}
-		if i == input{
+		if i == input {
 			accumulator = i
 			continue
 		}
